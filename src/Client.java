@@ -47,6 +47,13 @@ public class Client {
             Socket socket = new Socket(ip, port);
             objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
         } catch (IOException e) {
+
+            try {
+                Thread.sleep(4000);
+            } catch (InterruptedException interruptedException) {
+                //interruptedException.printStackTrace();
+            }
+
             connect();
         }
 
