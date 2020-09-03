@@ -28,10 +28,12 @@ public class Main {
         String ipAddress = new Scanner(System.in).nextLine();
 
         System.out.println("\n" +
-                "Have a nice chat!" +
+                "Attention! There is a limit on the number of Unicode characters in a message.\n" +
+                "The maximum allowed value is 255.\n\n" +
+                "Have a nice chat!\n" +
                 "\n");
 
-        new Thread(new Server(cipher, new Scanner(System.in).nextInt())).start();
-        new Client(ipAddress, cipher, new Scanner(System.in).nextInt());
+        new Thread(new Server(cipher)).start();
+        new Client(ipAddress, cipher);
     }
 }

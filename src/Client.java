@@ -9,10 +9,9 @@ public class Client {
     public int port = 4285;
     public String ip;
 
-    public Client(String ip, Cipher cipher, int port){
+    public Client(String ip, Cipher cipher){
         this.ip = ip;
         this.cipher = cipher;
-        this.port = port;
         sleep();
         connect();
         write();

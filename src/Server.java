@@ -6,9 +6,8 @@ public class Server implements Runnable{
     private final Cipher cipher;
     public int port = 4285;
 
-    public Server(Cipher cipher, int port){
+    public Server(Cipher cipher){
         this.cipher = cipher;
-        this.port = port;
     }
 
     @Override
