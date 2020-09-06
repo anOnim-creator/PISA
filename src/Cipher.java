@@ -9,7 +9,7 @@ public class Cipher {
         try {
             lowCipher = new LowCipher();
         } catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
     }
 
@@ -17,7 +17,7 @@ public class Cipher {
         try {
             return lowCipher.encryptText(msg, publicKey);
         } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
         return null;
     }
@@ -25,7 +25,7 @@ public class Cipher {
         try {
             return lowCipher.decryptText(bytes, privateKey);
         } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
         return null;
     }

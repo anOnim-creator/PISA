@@ -8,6 +8,10 @@ public class Message implements Serializable {
 
     public Message(String msg){
         decryptMessage = msg.substring(0, Math.min(msg.length(), 245));
+        if (msg.length() > 245) {
+            System.out.println("Attention! Your message is more than 245 characters. It has been shortened to: ");
+            System.out.println(decryptMessage);
+        }
     }
 
     public void decrypt(Cipher cipher, PrivateKey privateKey){

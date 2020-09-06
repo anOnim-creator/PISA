@@ -24,7 +24,7 @@ public class Client {
         try {
             objectOutputStream.writeObject(cipher.getPublicMyKey());
         } catch (IOException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
 
 
@@ -37,7 +37,9 @@ public class Client {
                 objectOutputStream.flush();
             } catch (IOException e) {
                 //e.printStackTrace();
-                System.out.println("The interlocutor is not available");
+                System.out.println("The interlocutor is not available." +
+                        "\nExit");
+                System.exit(0);
             }
         }
     }
@@ -45,7 +47,14 @@ public class Client {
         try {
             Socket socket = new Socket(ip, port);
             objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+
+            System.out.println("Connection with the interlocutor at address "
+                    + socket.getInetAddress().toString().replace("/", "")
+                    + " succeeded");
+
         } catch (IOException e) {
+
+            System.out.println("Connection to the interlocutor failed. Retry after 4 seconds");
 
             try {
                 Thread.sleep(4000);
@@ -59,9 +68,9 @@ public class Client {
     }
     private synchronized void sleep(){
         try {
-            TimeUnit.MILLISECONDS.sleep(1000);
+            TimeUnit.MILLISECONDS.sleep(1000); //Required to connect to the server after launch
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
     }
 }

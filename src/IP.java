@@ -22,7 +22,7 @@ public class IP {
         try {
             return ip.getLocalIP();
         } catch (IOException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
         return "Attention! There is no internet connection.";
     }
@@ -30,7 +30,7 @@ public class IP {
         try {
             return ip.getPublicIP();
         } catch (IOException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
         return "Attention! There is no internet connection.";
     }

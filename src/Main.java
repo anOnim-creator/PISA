@@ -13,7 +13,7 @@ public class Main {
                 "\n"
         );
 
-        System.out.println("Your IP addresses:");
+        System.out.println("Your IP addresses");
         System.out.println("Local IP: " + ip.getLocal());
         System.out.println("Public IP: " + ip.getPublic());
 
@@ -29,9 +29,7 @@ public class Main {
 
         System.out.println("\n" +
                 "Attention! There is a limit on the number of Unicode characters in a message.\n" +
-                "The maximum allowed value is 255.\n\n" +
-                "Have a nice chat!\n" +
-                "\n");
+                "The maximum allowed value is 255.\n");
 
         new Thread(new Server(cipher)).start();
         new Client(ipAddress, cipher);
