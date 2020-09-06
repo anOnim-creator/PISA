@@ -1,4 +1,5 @@
-import java.io.*;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
@@ -9,7 +10,7 @@ public class Client {
     public int port = 4285;
     public String ip;
 
-    public Client(String ip, Cipher cipher){
+    public Client(String ip, Cipher cipher) {
         this.ip = ip;
         this.cipher = cipher;
         sleep();
@@ -17,7 +18,7 @@ public class Client {
         write();
     }
 
-    public synchronized void write(){
+    public synchronized void write() {
         Scanner scanner = new Scanner(System.in);
         String s;
 
@@ -25,13 +26,12 @@ public class Client {
             objectOutputStream.writeObject(cipher.getPublicMyKey());
         } catch (IOException e) {
             //e.printStackTrace();
-        }
-        finally {
+        } finally {
             cipher.setPublicMyKey(null);
         }
 
 
-        while (true){
+        while (true) {
             s = scanner.nextLine();
             try {
                 Message msg = new Message(s);
@@ -40,24 +40,26 @@ public class Client {
                 objectOutputStream.flush();
             } catch (IOException e) {
                 //e.printStackTrace();
-                System.out.println("The interlocutor is not available." +
-                        "\nExit");
+                System.out.println(Main.resourceBundle.getString("client.exit1")
+                        + "\n"
+                        + Main.resourceBundle.getString("client.exit2"));
                 System.exit(0);
             }
         }
     }
-    public synchronized void connect(){
+
+    public synchronized void connect() {
         try {
             Socket socket = new Socket(ip, port);
             objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
 
-            System.out.println("Connection with the interlocutor at address "
-                    + socket.getInetAddress().toString().replace("/", "")
-                    + " succeeded");
+            System.out.println(Main.resourceBundle.getString("client.connection1")
+                    + " " + socket.getInetAddress().toString().replace("/", "")
+                    + " " + Main.resourceBundle.getString("client.connection2"));
 
         } catch (IOException e) {
 
-            System.out.println("Connection to the interlocutor failed. Retry after 4 seconds");
+            System.out.println(Main.resourceBundle.getString("client.fail"));
 
             try {
                 Thread.sleep(4000);
@@ -69,7 +71,8 @@ public class Client {
         }
 
     }
-    private synchronized void sleep(){
+
+    private synchronized void sleep() {
         try {
             TimeUnit.MILLISECONDS.sleep(1000); //Required to connect to the server after launch
         } catch (InterruptedException e) {

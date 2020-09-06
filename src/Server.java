@@ -1,12 +1,14 @@
-import java.io.*;
-import java.net.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.security.PublicKey;
 
-public class Server implements Runnable{
+public class Server implements Runnable {
     private final Cipher cipher;
     public int port = 4285;
 
-    public Server(Cipher cipher){
+    public Server(Cipher cipher) {
         this.cipher = cipher;
     }
 
@@ -18,9 +20,9 @@ public class Server implements Runnable{
             while (true) {
                 Socket socket = serverSocket.accept();
                 new Thread(new ClientHandler(socket)).start();
-                System.out.println("An interlocutor connected to you with ip address " +
-                        socket.getInetAddress().toString().replace("/", "") +
-                        "\n\n");
+                System.out.println(Main.resourceBundle.getString("server.connection")
+                        + " " + socket.getInetAddress().toString().replace("/", "")
+                        + "\n\n");
                 break;
             }
         } catch (IOException e) {
@@ -32,7 +34,7 @@ public class Server implements Runnable{
         ObjectInputStream objectInputStream;
         Socket socket;
 
-        public ClientHandler(Socket socket){
+        public ClientHandler(Socket socket) {
             try {
                 this.socket = socket;
                 objectInputStream = new ObjectInputStream(socket.getInputStream());
@@ -40,7 +42,8 @@ public class Server implements Runnable{
                 //e.printStackTrace();
             }
         }
-        public synchronized void go(){
+
+        public synchronized void go() {
             Message message;
 
             try {
@@ -52,20 +55,22 @@ public class Server implements Runnable{
             try {
                 while ((message = (Message) objectInputStream.readObject()) != null) {
                     message.decrypt(cipher, cipher.getPrivateMyKey());
-                    if (!message.checkHash()) System.out.println("The hash does not match! Possible message spoofing");
-                    System.out.print("Your interlocutor: ");
+                    if (!message.checkHash()) System.out.println(Main.resourceBundle.getString("server.spoofing"));
+                    System.out.print(Main.resourceBundle.getString("server.interlocutor") + " ");
                     System.out.println(message.toString());
                 }
             } catch (IOException e) {
                 //e.printStackTrace();
-                System.out.println("The interlocutor disconnected" +
-                        "\nExit");
+                System.out.println(Main.resourceBundle.getString("server.exit1")
+                        + "\n"
+                        + Main.resourceBundle.getString("server.exit2"));
                 System.exit(0);
             } catch (ClassNotFoundException e) {
                 //e.printStackTrace();
-                System.out.println("Error. A non-existent object was received!");
+                System.out.println(Main.resourceBundle.getString("server.error"));
             }
         }
+
         @Override
         public synchronized void run() {
             go();

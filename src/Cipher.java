@@ -1,11 +1,13 @@
-import javax.crypto.*;
-import java.security.*;
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import java.nio.charset.StandardCharsets;
+import java.security.*;
 
 public class Cipher {
     private LowCipher lowCipher;
 
-    public Cipher(){
+    public Cipher() {
         try {
             lowCipher = new LowCipher();
         } catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
@@ -13,7 +15,7 @@ public class Cipher {
         }
     }
 
-    public byte[] encrypt(String msg, PublicKey publicKey){
+    public byte[] encrypt(String msg, PublicKey publicKey) {
         try {
             return lowCipher.encryptText(msg, publicKey);
         } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException e) {
@@ -21,7 +23,8 @@ public class Cipher {
         }
         return null;
     }
-    public String decrypt(byte[] bytes, PrivateKey privateKey){
+
+    public String decrypt(byte[] bytes, PrivateKey privateKey) {
         try {
             return lowCipher.decryptText(bytes, privateKey);
         } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException e) {
@@ -33,16 +36,20 @@ public class Cipher {
     public PublicKey getPublicMyKey() {
         return this.lowCipher.getPublicMyKey();
     }
+
     public PrivateKey getPrivateMyKey() {
         return this.lowCipher.getPrivateMyKey();
     }
+
     public PublicKey getPublicKey() {
         return this.lowCipher.getPublicKey();
     }
+
     public void setPublicKey(PublicKey publicKey) {
         this.lowCipher.setPublicKey(publicKey);
     }
-    public void setPublicMyKey(PublicKey publicMyKey){
+
+    public void setPublicMyKey(PublicKey publicMyKey) {
         this.lowCipher.setPublicMyKey(publicMyKey);
     }
 
@@ -64,36 +71,45 @@ public class Cipher {
             if (cipherT == null || cipherT.equals("")) cipherT = "RSA";
             cipher = javax.crypto.Cipher.getInstance(cipherT);
         }
+
         public void generateKeys(int keyLength) throws NoSuchAlgorithmException {
             if (keyLength <= 2048) keyLength = 2048;
             this.keyGen = KeyPairGenerator.getInstance(cipher.getAlgorithm());
             this.keyGen.initialize(keyLength);
         }
+
         public void createKeys() {
             KeyPair pair = this.keyGen.generateKeyPair();
             this.privateMyKey = pair.getPrivate();
             this.publicMyKey = pair.getPublic();
         }
+
         public byte[] encryptText(String msg, PublicKey publicKey) throws BadPaddingException, IllegalBlockSizeException, InvalidKeyException {
             cipher.init(javax.crypto.Cipher.ENCRYPT_MODE, publicKey);
             return cipher.doFinal(msg.getBytes(StandardCharsets.UTF_8));
         }
+
         public String decryptText(byte[] bytes, PrivateKey key) throws BadPaddingException, IllegalBlockSizeException, InvalidKeyException {
             cipher.init(javax.crypto.Cipher.DECRYPT_MODE, key);
             return new String(cipher.doFinal(bytes), StandardCharsets.UTF_8);
         }
+
         public PublicKey getPublicMyKey() {
             return publicMyKey;
         }
+
         public PrivateKey getPrivateMyKey() {
             return privateMyKey;
         }
+
         public PublicKey getPublicKey() {
             return publicKey;
         }
+
         public void setPublicKey(PublicKey publicKey) {
             this.publicKey = publicKey;
         }
+
         public void setPublicMyKey(PublicKey publicMyKey) {
             this.publicMyKey = publicMyKey;
         }

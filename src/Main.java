@@ -1,35 +1,36 @@
+import java.util.ResourceBundle;
 import java.util.Scanner;
 
+
 public class Main {
+    public static ResourceBundle resourceBundle;
+
     public static void main(String[] args) {
+        resourceBundle = ResourceBundle.getBundle("text");
+
         IP ip = new IP();
         Cipher cipher = new Cipher();
 
-        System.out.println(
-                "\n" +
-                "Welcome to PISA!\n" +
-                "This is your application for privately sharing information on the web.\n" +
-                "You can learn more about how it works and the code on GitHub." +
-                "\n"
-        );
+        System.out.println("\n"
+                + resourceBundle.getString("welcome.info1") + "\n"
+                + resourceBundle.getString("welcome.info2") + "\n"
+                + resourceBundle.getString("welcome.info3") + "\n");
 
-        System.out.println("Your IP addresses");
-        System.out.println("Local IP: " + ip.getLocal());
-        System.out.println("Public IP: " + ip.getPublic());
+        System.out.println(resourceBundle.getString("welcome.ip"));
+        System.out.println(resourceBundle.getString("welcome.local") + " " + ip.getLocal());
+        System.out.println(resourceBundle.getString("welcome.public") + " " + ip.getPublic());
 
         System.out.println("\n" +
-                "Tell your interlocutor your ip address.\n" +
-                "The rest of the application will do for you!\n" +
-                "(Standard connection port: 4285)" +
-                "\n"
-        );
+                resourceBundle.getString("welcome.warning1") + "\n" +
+                resourceBundle.getString("welcome.warning2") + "\n" +
+                resourceBundle.getString("welcome.warning3") + "\n");
 
-        System.out.print("Enter the IP address of the interlocutor: ");
+        System.out.print(resourceBundle.getString("welcome.interlocutor") + " ");
         String ipAddress = new Scanner(System.in).nextLine();
 
-        System.out.println("\n" +
-                "Attention! There is a limit on the number of Unicode characters in a message.\n" +
-                "The maximum allowed value is 255.\n");
+        System.out.println("\n"
+                + resourceBundle.getString("welcome.attention1") + "\n"
+                + resourceBundle.getString("welcome.attention2") + "\n");
 
         new Thread(new Server(cipher)).start();
         new Client(ipAddress, cipher);
