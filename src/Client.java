@@ -26,6 +26,9 @@ public class Client {
         } catch (IOException e) {
             //e.printStackTrace();
         }
+        finally {
+            cipher.setPublicMyKey(null);
+        }
 
 
         while (true){

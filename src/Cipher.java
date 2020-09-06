@@ -42,6 +42,9 @@ public class Cipher {
     public void setPublicKey(PublicKey publicKey) {
         this.lowCipher.setPublicKey(publicKey);
     }
+    public void setPublicMyKey(PublicKey publicMyKey){
+        this.lowCipher.setPublicMyKey(publicMyKey);
+    }
 
     private class LowCipher {
         private javax.crypto.Cipher cipher;
@@ -90,6 +93,9 @@ public class Cipher {
         }
         public void setPublicKey(PublicKey publicKey) {
             this.publicKey = publicKey;
+        }
+        public void setPublicMyKey(PublicKey publicMyKey) {
+            this.publicMyKey = publicMyKey;
         }
     }
 }
