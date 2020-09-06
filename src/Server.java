@@ -17,6 +17,7 @@ public class Server implements Runnable{
             while (true) {
                 Socket socket = serverSocket.accept();
                 new Thread(new ClientHandler(socket)).start();
+                break;
             }
         } catch (IOException e) {
             e.printStackTrace();
