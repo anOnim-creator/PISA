@@ -5,10 +5,10 @@ import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 public class Client {
-    private ObjectOutputStream objectOutputStream = null;
     private final Cipher cipher;
     public int port = 4285;
     public String ip;
+    private ObjectOutputStream objectOutputStream = null;
 
     public Client(String ip, Cipher cipher) {
         this.ip = ip;
@@ -40,9 +40,7 @@ public class Client {
                 objectOutputStream.flush();
             } catch (IOException e) {
                 //e.printStackTrace();
-                System.out.println(Main.resourceBundle.getString("client.exit1")
-                        + "\n"
-                        + Main.resourceBundle.getString("client.exit2"));
+                System.out.println(Main.resourceBundle.getString("client.exit1") + "\n" + Main.resourceBundle.getString("client.exit2"));
                 System.exit(0);
             }
         }

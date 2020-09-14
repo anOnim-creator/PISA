@@ -8,21 +8,6 @@ import java.net.URL;
 public class IP {
     private final LowIP ip = new LowIP();
 
-    private class LowIP {
-        public String getLocalIP() throws IOException {
-            Socket socket = new Socket();
-            socket.connect(new InetSocketAddress("google.com", 80));
-            return socket.getLocalAddress().toString().replace("/", "");
-        }
-
-        public String getPublicIP() throws IOException {
-            URL whatIsMyIP = new URL("http://checkip.amazonaws.com");
-            BufferedReader in = new BufferedReader(new InputStreamReader(
-                    whatIsMyIP.openStream()));
-            return in.readLine();
-        }
-    }
-
     public String getLocal() {
         try {
             return ip.getLocalIP();
@@ -39,5 +24,21 @@ public class IP {
             //e.printStackTrace();
         }
         return Main.resourceBundle.getString("ip.attention");
+    }
+
+    @SuppressWarnings("InnerClassMayBeStatic")
+    private class LowIP {
+        public String getLocalIP() throws IOException {
+            Socket socket = new Socket();
+            socket.connect(new InetSocketAddress("google.com", 80));
+            return socket.getLocalAddress().toString().replace("/", "");
+        }
+
+        public String getPublicIP() throws IOException {
+            URL whatIsMyIP = new URL("http://checkip.amazonaws.com");
+            BufferedReader in = new BufferedReader(new InputStreamReader(
+                    whatIsMyIP.openStream()));
+            return in.readLine();
+        }
     }
 }

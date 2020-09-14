@@ -10,7 +10,7 @@ public class Message implements Serializable {
     public Message(String msg) {
         decryptMessage = msg.substring(0, Math.min(msg.length(), 245));
         if (msg.length() > 245) {
-            System.out.println(Main.resourceBundle.getString("message.attention") + " ");
+            System.out.println(Main.resourceBundle.getString("message.attention"));
             System.out.println(decryptMessage);
         }
     }

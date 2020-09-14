@@ -37,6 +37,10 @@ public class Cipher {
         return this.lowCipher.getPublicMyKey();
     }
 
+    public void setPublicMyKey(PublicKey publicMyKey) {
+        this.lowCipher.setPublicMyKey(publicMyKey);
+    }
+
     public PrivateKey getPrivateMyKey() {
         return this.lowCipher.getPrivateMyKey();
     }
@@ -49,10 +53,7 @@ public class Cipher {
         this.lowCipher.setPublicKey(publicKey);
     }
 
-    public void setPublicMyKey(PublicKey publicMyKey) {
-        this.lowCipher.setPublicMyKey(publicMyKey);
-    }
-
+    @SuppressWarnings("InnerClassMayBeStatic")
     private class LowCipher {
         private javax.crypto.Cipher cipher;
         private KeyPairGenerator keyGen;
@@ -98,6 +99,10 @@ public class Cipher {
             return publicMyKey;
         }
 
+        public void setPublicMyKey(PublicKey publicMyKey) {
+            this.publicMyKey = publicMyKey;
+        }
+
         public PrivateKey getPrivateMyKey() {
             return privateMyKey;
         }
@@ -108,10 +113,6 @@ public class Cipher {
 
         public void setPublicKey(PublicKey publicKey) {
             this.publicKey = publicKey;
-        }
-
-        public void setPublicMyKey(PublicKey publicMyKey) {
-            this.publicMyKey = publicMyKey;
         }
     }
 }

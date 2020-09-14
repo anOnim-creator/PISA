@@ -6,9 +6,11 @@ import java.security.PublicKey;
 
 public class Server implements Runnable {
     private final Cipher cipher;
+    private final String ipAddress;
     public int port = 4285;
 
-    public Server(Cipher cipher) {
+    public Server(String ipAddress, Cipher cipher) {
+        this.ipAddress = ipAddress;
         this.cipher = cipher;
     }
 
@@ -16,14 +18,15 @@ public class Server implements Runnable {
     public synchronized void run() {
         try {
             ServerSocket serverSocket = new ServerSocket(port);
-            //noinspection LoopStatementThatDoesntLoop
             while (true) {
                 Socket socket = serverSocket.accept();
-                new Thread(new ClientHandler(socket)).start();
-                System.out.println(Main.resourceBundle.getString("server.connection")
-                        + " " + socket.getInetAddress().toString().replace("/", "")
-                        + "\n\n");
-                break;
+                if (socket.getInetAddress().toString().replace("/", "").equals(ipAddress)) {
+                    new Thread(new ClientHandler(socket)).start();
+                    System.out.println(Main.resourceBundle.getString("server.connection")
+                            + " " + socket.getInetAddress().toString().replace("/", "")
+                            + "\n\n");
+                    break;
+                }
             }
         } catch (IOException e) {
             //e.printStackTrace();
@@ -61,9 +64,7 @@ public class Server implements Runnable {
                 }
             } catch (IOException e) {
                 //e.printStackTrace();
-                System.out.println(Main.resourceBundle.getString("server.exit1")
-                        + "\n"
-                        + Main.resourceBundle.getString("server.exit2"));
+                System.out.println(Main.resourceBundle.getString("server.exit1") + "\n" + Main.resourceBundle.getString("server.exit2"));
                 System.exit(0);
             } catch (ClassNotFoundException e) {
                 //e.printStackTrace();

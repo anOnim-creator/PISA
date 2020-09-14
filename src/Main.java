@@ -1,7 +1,6 @@
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
-
 public class Main {
     public static ResourceBundle resourceBundle;
 
@@ -32,7 +31,7 @@ public class Main {
                 + resourceBundle.getString("welcome.attention1") + "\n"
                 + resourceBundle.getString("welcome.attention2") + "\n");
 
-        new Thread(new Server(cipher)).start();
+        new Thread(new Server(ipAddress, cipher)).start();
         new Client(ipAddress, cipher);
     }
 }
