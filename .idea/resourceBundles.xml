@@ -6,6 +6,7 @@
     <custom-resource-bundle>
       <file value="file://$PROJECT_DIR$/src/text.properties" />
       <file value="file://$PROJECT_DIR$/src/text_ru.properties" />
+      <file value="file://$PROJECT_DIR$/src/text_zh.properties" />
       <base-name>text</base-name>
     </custom-resource-bundle>
   </component>
